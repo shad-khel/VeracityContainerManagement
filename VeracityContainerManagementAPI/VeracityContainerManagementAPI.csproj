@@ -140,6 +140,10 @@
     <Compile Include="Controllers\ContainerController.cs" />
     <Compile Include="Controllers\ContainerGroupController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
+    <Compile Include="DB\201711262019174_AddDB.cs" />
+    <Compile Include="DB\201711262019174_AddDB.Designer.cs">
+      <DependentUpon>201711262019174_AddDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB\Configuration.cs" />
     <Compile Include="DB\ContainerGroups.cs" />
     <Compile Include="DB\Containers.cs" />
@@ -162,7 +166,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="DB\201711262019174_AddDB.resx">
+      <DependentUpon>201711262019174_AddDB.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
