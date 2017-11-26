@@ -10,20 +10,8 @@ namespace VeracityContainerManagement
 {
     class Program
     {
+          
          
-
-        public class Storage
-        {
-
-            public  List<Models.Person> People = new List<Models.Person>();
-            public  List<Models.Container> Containers = new List<Models.Container>();
-            public  List<Models.UserGroup> UserGroups = new List<Models.UserGroup>();
-            public  List<Models.ContainerGroup> ContainerGroups = new List<Models.ContainerGroup>();
-            public  List<Models.UserGroupContainerGroupAccess> UserGroupContainerGroupAccesses = new List<Models.UserGroupContainerGroupAccess>();
-            
-        }
-
-
         static void Main(string[] args)
         {
             //SetUp
@@ -219,8 +207,7 @@ namespace VeracityContainerManagement
                {
                     //increment
                     var Id = _store.UserGroupContainerGroupAccesses.Count + 1;
-
-
+                     
                     _store.UserGroupContainerGroupAccesses.Add( new Models.UserGroupContainerGroupAccess { ContainerGroup = cg, UserGroup = ug, Id = Id });
                 }
             }
@@ -233,12 +220,9 @@ namespace VeracityContainerManagement
                     _store.UserGroupContainerGroupAccesses.RemoveAll(a => a.Id == v.Id);
 
                 }
-
-                
+                 
             }
-
-            //TODO Remove container from shared container list
-
+             
         }
 
         public class Queries
@@ -282,6 +266,17 @@ namespace VeracityContainerManagement
             }
 
             //TODO Implement user access - Who has aceess to this container
+
+        }
+
+        public class Storage
+        {
+
+            public List<Models.Person> People = new List<Models.Person>();
+            public List<Models.Container> Containers = new List<Models.Container>();
+            public List<Models.UserGroup> UserGroups = new List<Models.UserGroup>();
+            public List<Models.ContainerGroup> ContainerGroups = new List<Models.ContainerGroup>();
+            public List<Models.UserGroupContainerGroupAccess> UserGroupContainerGroupAccesses = new List<Models.UserGroupContainerGroupAccess>();
 
         }
     }
