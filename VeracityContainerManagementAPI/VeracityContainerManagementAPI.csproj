@@ -140,6 +140,7 @@
     <Compile Include="Controllers\ContainerController.cs" />
     <Compile Include="Controllers\ContainerGroupController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
+    <Compile Include="DB\Configuration.cs" />
     <Compile Include="DB\ContainerGroups.cs" />
     <Compile Include="DB\Containers.cs" />
     <Compile Include="Controllers\UserController.cs" />
