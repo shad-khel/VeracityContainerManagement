@@ -137,6 +137,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ContainerAccessController.cs" />
+    <Compile Include="Controllers\ContainerController.cs" />
+    <Compile Include="Controllers\ContainerGroupController.cs" />
+    <Compile Include="Controllers\UserGroupController.cs" />
     <Compile Include="DB\ContainerGroups.cs" />
     <Compile Include="DB\Containers.cs" />
     <Compile Include="Controllers\UserController.cs" />

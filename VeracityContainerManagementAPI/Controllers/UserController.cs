@@ -1,19 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
+    [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
-        // GET api/values/5
-        public string Get(int id)
-        { 
-            return "value";
+
+        public UserController()
+        {
+
         }
+
+        [HttpPost]
+        [Route("AddUser")]
+        public Task<IHttpActionResult> AddUser()
+        { 
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetUserDetails")]
+        public Task<IHttpActionResult> GetUserDetails()
+        {
+            return Ok();
+        }
+
 
     }
 }
