@@ -12,14 +12,14 @@ namespace VeracityContainerManagement
     {
          
 
-        public  class Storage
+        public class Storage
         {
 
-            public  List<Modles.Person> People = new List<Modles.Person>();
-            public  List<Modles.Container> Containers = new List<Modles.Container>();
-            public  List<Modles.UserGroup> UserGroups = new List<Modles.UserGroup>();
-            public  List<Modles.ContainerGroup> ContainerGroups = new List<Modles.ContainerGroup>();
-            public  List<Modles.UserGroupContainerGroupAccess> UserGroupContainerGroupAccesses = new List<Modles.UserGroupContainerGroupAccess>();
+            public  List<Models.Person> People = new List<Models.Person>();
+            public  List<Models.Container> Containers = new List<Models.Container>();
+            public  List<Models.UserGroup> UserGroups = new List<Models.UserGroup>();
+            public  List<Models.ContainerGroup> ContainerGroups = new List<Models.ContainerGroup>();
+            public  List<Models.UserGroupContainerGroupAccess> UserGroupContainerGroupAccesses = new List<Models.UserGroupContainerGroupAccess>();
             
         }
 
@@ -31,10 +31,10 @@ namespace VeracityContainerManagement
             Commands c = new Commands(s);
             Queries q = new Queries(s);
 
-            var shad = new Modles.Person { Email = "shad.khel@dnvgl.com", DNVGLID = Guid.NewGuid().ToString(), Id = 1, Name = "Shad" };
-            var anatoliy = new Modles.Person { Email = "Anatoliy.Tanaschuk@dnvgl.com", DNVGLID = Guid.NewGuid().ToString(), Id = 2, Name = "Anatoliy" };
-            var s1 = new Modles.Container { Id = 1, Name = "ship_01", ResourceId = Guid.NewGuid().ToString() };
-            var s2 = new Modles.Container { Id = 2, Name = "ship_02", ResourceId = Guid.NewGuid().ToString() };
+            var shad = new Models.Person { Email = "shad.khel@dnvgl.com", DNVGLID = Guid.NewGuid().ToString(), Id = 1, Name = "Shad" };
+            var anatoliy = new Models.Person { Email = "Anatoliy.Tanaschuk@dnvgl.com", DNVGLID = Guid.NewGuid().ToString(), Id = 2, Name = "Anatoliy" };
+            var s1 = new Models.Container { Id = 1, Name = "ship_01", ResourceId = Guid.NewGuid().ToString() };
+            var s2 = new Models.Container { Id = 2, Name = "ship_02", ResourceId = Guid.NewGuid().ToString() };
 
 
             c.AddUser(shad);
@@ -44,14 +44,14 @@ namespace VeracityContainerManagement
             c.AddContainer(s2);
 
             //Add all ships containers to container grouping ships
-            var cg1 = new Modles.ContainerGroup { Id = 1, name = "ships", ContainerInGroup = new List<Modles.Container>() };
+            var cg1 = new Models.ContainerGroup { Id = 1, name = "ships", ContainerInGroup = new List<Models.Container>() };
             c.AddContainerToContainerGroup(s1, cg1);
             c.AddContainerToContainerGroup(s2, cg1);
 
             
             //Create user groups to access ships
-            var ug1 = new Modles.UserGroup { Id = 1, name = "readers of ships", PersonInGroup = new List<Modles.Person>() };
-            var ug2 = new Modles.UserGroup { Id = 2, name = "admin of ships", PersonInGroup = new List<Modles.Person>() };
+            var ug1 = new Models.UserGroup { Id = 1, name = "readers of ships", PersonInGroup = new List<Models.Person>() };
+            var ug2 = new Models.UserGroup { Id = 2, name = "admin of ships", PersonInGroup = new List<Models.Person>() };
             
 
             //Add users to a user group
@@ -80,11 +80,32 @@ namespace VeracityContainerManagement
                     Console.WriteLine(pp.Name);
                 }
             }
+             
+            Console.WriteLine($"-------------------------");
+            Console.WriteLine($"Removing user group {ug1.name} access from container group {cg1.name}");
+            //Remove access
+            c.RemoveContainerGroupFromUserGroup(cg1, ug1);
+            //Which group has access?
+            o = q.getListOfUserGroupsWithAcessToContainerGroup(cg1);
+
+            Console.WriteLine($"Which group has access to {cg1.name}");
+            Console.WriteLine(o.Count);
+            foreach (var aa in o)
+            {
+                Console.WriteLine(aa.name);
+
+                Console.WriteLine("whos in that group?");
+                var p = q.getListOfPeapleInGroupQuery(aa);
+                foreach (var pp in p)
+                {
+                    Console.WriteLine(pp.Name);
+                }
+            }
 
             Console.Read();
         }
 
-        public class Modles
+        public class Models
         {
             public class Person
             {
@@ -137,7 +158,7 @@ namespace VeracityContainerManagement
                 _store = storage;
             }
              
-            public void AddUser(Modles.Person p)
+            public void AddUser(Models.Person p)
             {
                 if (!_store.People.Exists(o => o.DNVGLID == p.DNVGLID))
                     _store.People.Add(p);
@@ -145,7 +166,7 @@ namespace VeracityContainerManagement
             }
 
 
-            public void AddContainer(Modles.Container c)
+            public void AddContainer(Models.Container c)
             {
                 if (!_store.Containers.Exists(o => o.ResourceId == c.ResourceId))
                     _store.Containers.Add(c);
@@ -153,7 +174,7 @@ namespace VeracityContainerManagement
             }
 
 
-            public void AddPersonToUserGroup(Modles.Person p, Modles.UserGroup ug)
+            public void AddPersonToUserGroup(Models.Person p, Models.UserGroup ug)
             {
                 if (!ug.PersonInGroup.Contains(p))
                 {
@@ -162,7 +183,7 @@ namespace VeracityContainerManagement
             }
 
 
-            public void AddContainerToContainerGroup(Modles.Container c, Modles.ContainerGroup cg)
+            public void AddContainerToContainerGroup(Models.Container c, Models.ContainerGroup cg)
             {
                 if (!cg.ContainerInGroup.Contains(c))
                 {
@@ -171,7 +192,7 @@ namespace VeracityContainerManagement
             }
 
 
-            public void RemovePersonToUserGroup(Modles.Person p, Modles.UserGroup ug)
+            public void RemovePersonToUserGroup(Models.Person p, Models.UserGroup ug)
             {
                 if (ug.PersonInGroup.Contains(p))
                 {
@@ -180,7 +201,7 @@ namespace VeracityContainerManagement
             }
 
 
-            public void RemoveContainerToContainerGroup(Modles.Container c, Modles.ContainerGroup cg)
+            public void RemoveContainerToContainerGroup(Models.Container c, Models.ContainerGroup cg)
             {
                 if (cg.ContainerInGroup.Contains(c))
                 {
@@ -189,18 +210,31 @@ namespace VeracityContainerManagement
             }
 
             //TODO Add User to shared container list
-
-
             //TODO remove User to shared container list
 
             //TODO Add Container to shared user list
-            public void AddContainerGroupToUserGroup(Modles.ContainerGroup cg, Modles.UserGroup ug)
+            public void AddContainerGroupToUserGroup(Models.ContainerGroup cg, Models.UserGroup ug)
+            { 
+               if( !_store.UserGroupContainerGroupAccesses.Exists(access =>access.ContainerGroup.Id == cg.Id &&  access.UserGroup.Id == ug.Id) )
+               {
+                    //increment
+                    var Id = _store.UserGroupContainerGroupAccesses.Count + 1;
+
+
+                    _store.UserGroupContainerGroupAccesses.Add( new Models.UserGroupContainerGroupAccess { ContainerGroup = cg, UserGroup = ug, Id = Id });
+                }
+            }
+
+            public void RemoveContainerGroupFromUserGroup(Models.ContainerGroup cg, Models.UserGroup ug)
             {
+                var v = _store.UserGroupContainerGroupAccesses.Find(access => access.ContainerGroup.Id == cg.Id && access.UserGroup.Id == ug.Id);
+                if ( v != null )
+                {
+                    _store.UserGroupContainerGroupAccesses.RemoveAll(a => a.Id == v.Id);
 
-                // This one is difficult to check if exsits
+                }
 
-                _store.UserGroupContainerGroupAccesses.Add(new Modles.UserGroupContainerGroupAccess { ContainerGroup = cg, UserGroup = ug });
-
+                
             }
 
             //TODO Remove container from shared container list
@@ -217,22 +251,22 @@ namespace VeracityContainerManagement
             }
 
             //Who is in user group X
-            public List<Modles.Person> getListOfPeapleInGroupQuery(Modles.UserGroup ug)
+            public List<Models.Person> getListOfPeapleInGroupQuery(Models.UserGroup ug)
             {
                 return ug.PersonInGroup;
             }
 
             //What containers are in container group X
-            public List<Modles.Container> getListOfContainersInContainerGroupQuery(Modles.ContainerGroup cg)
+            public List<Models.Container> getListOfContainersInContainerGroupQuery(Models.ContainerGroup cg)
             {
                 return cg.ContainerInGroup;
             }
 
             //Which group has access to this container group
-            public List<Modles.UserGroup> getListOfUserGroupsWithAcessToContainerGroup(Modles.ContainerGroup cg)
+            public List<Models.UserGroup> getListOfUserGroupsWithAcessToContainerGroup(Models.ContainerGroup cg)
             {
 
-                List<Modles.UserGroup> result = new List<Modles.UserGroup>();
+                List<Models.UserGroup> result = new List<Models.UserGroup>();
 
                 var access =_store.UserGroupContainerGroupAccesses.FindAll(o => o.ContainerGroup.Id == cg.Id);
                 foreach ( var v in access)
