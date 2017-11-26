@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 
@@ -15,14 +16,15 @@ namespace VeracityContainerManagementAPI.Controllers
         [Route("AddContainer")]
         public Task<IHttpActionResult> AddContainer()
         {
-            return Ok();
+            throw new NotImplementedException();
+          
         }
 
         [HttpGet]
         [Route("GetContainerDetails")]
         public Task<IHttpActionResult> GetContainerDetails()
         {
-            return Ok();
+            throw new NotImplementedException();
         }
 
 
