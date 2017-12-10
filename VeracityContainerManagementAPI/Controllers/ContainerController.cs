@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
+using VeracityContainerManagementAPI.ViewModels;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -43,11 +45,31 @@ namespace VeracityContainerManagementAPI.Controllers
 
         [HttpGet]
         [Route("GetContainerDetails")]
-        public Task<IHttpActionResult> GetContainerDetails()
+        public Containers GetContainerDetails(Guid containerId)
         {
-            throw new NotImplementedException();
+            return _Db.Containers.FirstOrDefault(a => a.ContainerId == containerId);
         }
 
+        [HttpGet]
+        [Route("ListUsersWithAccessToContainer")]
+        public List<ContainerAccessVM> ListUsersWithAccessToContainer(Guid containerId)
+        {
+            var container = _Db.Containers.FirstOrDefault(a => a.ContainerId == containerId);
 
+            var ret = new List<ContainerAccessVM>();
+            
+            //Experiment retrive users by looping through navigation properties
+            //TODO can this be simplified with a LinqQuery or Join?
+            foreach (var c in container.ContainerGroups)
+            {
+                foreach (var ug in c.UserGroups)
+                {
+                    foreach (var u in ug.Users)
+                        ret.Add(new ContainerAccessVM { Email = u.Email, UserId = u.UserId, UserName = u.UserName });
+                }
+            }
+
+            return ret;
+        }
     }
 }
