@@ -4,36 +4,53 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using VeracityContainerManagementAPI.DB;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
+    [RoutePrefix("api/ContainerGroup")]
     public class ContainerGroupController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        private readonly IDataModel _Db;
+
+        public ContainerGroupController(IDataModel db)
         {
-            return new string[] { "value1", "value2" };
+            _Db = db;
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+          
+
+        [HttpPost]
+        [Route("CreateContainerGroup")]
+        //Add a container group
+        public void CreateContainerGroup()
         {
-            return "value";
+
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("AddContainerToContainerGroup")]
+        //Add a container to container group
+        public void AddContainerToContainerGroup()
         {
+
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        [Route("RemoveContainerFromContainerGroup")]
+        //Remove container from container group
+        public void RemoveContainerFromContainerGroup()
         {
+
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpPost]
+        [Route("ContainerGroupDetails")]
+        //Return container group details
+        public void ContainerGroupDetails()
         {
+
         }
+
     }
 }
