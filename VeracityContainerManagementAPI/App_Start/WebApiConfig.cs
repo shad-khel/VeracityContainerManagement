@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
+using VeracityContainerManagementAPI.DB;
+using SimpleInjector.Lifestyles;
 
 namespace VeracityContainerManagementAPI
 {
@@ -10,6 +11,12 @@ namespace VeracityContainerManagementAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+
+            var container = new Container();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            container.Register <IDataModel, DataModel>(Lifestyle.Scoped);
+            container.Verify();
+            GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

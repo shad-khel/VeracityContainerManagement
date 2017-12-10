@@ -5,7 +5,7 @@ namespace VeracityContainerManagementAPI.DB
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class DataModel : DbContext
+    public partial class DataModel : DbContext, IDataModel
     {
         public DataModel()
             : base("name=DataModel")
@@ -35,5 +35,12 @@ namespace VeracityContainerManagementAPI.DB
                 .WithMany(e => e.UserGroups)
                 .Map(m => m.ToTable("UserGroupsUsers").MapLeftKey("UserGroupId").MapRightKey("UserId"));
         }
+
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+
+       
     }
 }
