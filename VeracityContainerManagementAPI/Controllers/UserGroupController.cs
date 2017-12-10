@@ -57,9 +57,7 @@ namespace VeracityContainerManagementAPI.Controllers
                 userGroup.Users.Add(user);
                 _Db.SaveChanges();
             }
-
-            
-
+             
             HttpResponseMessage response = new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.OK
@@ -73,6 +71,18 @@ namespace VeracityContainerManagementAPI.Controllers
         //Remove User from UserGroup
         public Task<HttpResponseMessage> RemoveUserFromUserGroup(Guid userId, Guid userGroupId)
         {
+
+            var userGroup = _Db.UserGroups.FirstOrDefault(a => a.UserGroupId == userGroupId);
+            var user = _Db.Users.FirstOrDefault(a => a.UserId == userId);
+
+            var check = userGroup.Users.Contains(user);
+
+            if (check)
+            {
+                userGroup.Users.Remove(user);
+                _Db.SaveChanges();
+            }
+
 
             HttpResponseMessage response = new HttpResponseMessage()
             {
