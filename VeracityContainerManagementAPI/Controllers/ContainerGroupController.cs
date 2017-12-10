@@ -45,7 +45,7 @@ namespace VeracityContainerManagementAPI.Controllers
         [HttpPost]
         [Route("AddContainerToContainerGroup")]
         //Add a container to container group
-        public void AddContainerToContainerGroup(Guid ContainerId, Guid containerGroupId)
+        public Task<HttpResponseMessage> AddContainerToContainerGroup(Guid ContainerId, Guid containerGroupId)
         {
              
             var conainerGroup = _Db.ContainerGroups.FirstOrDefault(a => a.ContainerGroupId == containerGroupId); 
@@ -58,12 +58,18 @@ namespace VeracityContainerManagementAPI.Controllers
                 conainerGroup.Containers.Add(container);
                 _Db.SaveChanges();
             }
+
+            HttpResponseMessage response = new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+            return Task.FromResult(response);
         }
 
         [HttpPost]
         [Route("RemoveContainerFromContainerGroup")]
         //Remove container from container group
-        public void RemoveContainerFromContainerGroup(Guid ContainerId, Guid containerGroupId)
+        public Task<HttpResponseMessage> RemoveContainerFromContainerGroup(Guid ContainerId, Guid containerGroupId)
         {
             var conainerGroup = _Db.ContainerGroups.FirstOrDefault(a => a.ContainerGroupId == containerGroupId);
             var container = _Db.Containers.FirstOrDefault(a => a.ContainerId == ContainerId);
@@ -75,14 +81,20 @@ namespace VeracityContainerManagementAPI.Controllers
                 conainerGroup.Containers.Remove(container);
                 _Db.SaveChanges();
             }
+
+            HttpResponseMessage response = new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+            return Task.FromResult(response);
         }
 
         [HttpPost]
         [Route("ContainerGroupDetails")]
         //Return container group details
-        public void ContainerGroupDetails()
+        public Task<HttpResponseMessage> ContainerGroupDetails()
         {
-
+            throw new NotImplementedException();
         }
 
     }
