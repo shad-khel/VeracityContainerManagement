@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
 using VeracityContainerManagementAPI.ViewModels;
+using System.Data.Entity;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -54,7 +55,12 @@ namespace VeracityContainerManagementAPI.Controllers
         [Route("ListUsersWithAccessToContainer")]
         public List<ContainerAccessVM> ListUsersWithAccessToContainer(Guid containerId)
         {
-            var container = _Db.Containers.FirstOrDefault(a => a.ContainerId == containerId);
+
+            //var containersAccess = _Db.Containers.Where(a => a.ContainerId == containerId)
+            //    .Include(a => a.ContainerGroups.Select(b => b.UserGroups.Select(c => c.Users))).FirstOrDefault();
+
+             
+         var container = _Db.Containers.FirstOrDefault(a => a.ContainerId == containerId);
 
             var ret = new List<ContainerAccessVM>();
             
