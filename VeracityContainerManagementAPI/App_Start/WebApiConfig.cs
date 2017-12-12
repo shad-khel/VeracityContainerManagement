@@ -3,6 +3,8 @@ using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using VeracityContainerManagementAPI.DB;
 using SimpleInjector.Lifestyles;
+using System.Net.Http;
+using VeracityContainerManagementAPI.Helpers;
 
 namespace VeracityContainerManagementAPI
 {
@@ -15,6 +17,9 @@ namespace VeracityContainerManagementAPI
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             container.Register <IDataModel, DataModel>(Lifestyle.Scoped);
+            container.Register(()=> new HttpClient());
+            container.Register<IVeracityResourceSharingHelper, VeracityResourceSharingHelper>();
+
             container.Verify();
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
