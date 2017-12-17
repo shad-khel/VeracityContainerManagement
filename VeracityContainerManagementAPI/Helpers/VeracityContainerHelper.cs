@@ -36,6 +36,8 @@ namespace VeracityContainerManagementAPI.Helpers
             var apiKey = WebConfigurationManager.AppSettings["Ocp-Apim-Subscription-Key"];
             var useApiManager = WebConfigurationManager.AppSettings["IsApiManager"];
 
+            var containerNameLength = 10;
+
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
 
             if (useApiManager.ToLower() == "true")
@@ -52,7 +54,9 @@ namespace VeracityContainerManagementAPI.Helpers
                 if ( _Db.Containers.Where( a => a.ContainerId.ToString().ToUpper() == r.ResourceId.ToString().ToUpper()).Count() == 0) 
                 {
                     //TODO save the owner Id details also
-                    _Db.Containers.Add(new Containers { ContainerName = r.ResourceName, ContainerId = r.ResourceId, ContainerGroups =  });
+                    _Db.Containers.Add(
+                        new Containers { ContainerName = r.ResourceName.Substring(0, containerNameLength) , ContainerId = r.ResourceId}
+                        );
                     
                 }
 
