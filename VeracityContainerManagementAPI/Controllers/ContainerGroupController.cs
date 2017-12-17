@@ -30,9 +30,14 @@ namespace VeracityContainerManagementAPI.Controllers
         [HttpPost]
         [Route("CreateContainerGroup")]
         //Add a container group
-        public Task<HttpResponseMessage> CreateContainerGroup(string containerGroupName) {
+        public Task<HttpResponseMessage> CreateContainerGroup(string containerGroupName, Guid KeyTemplateId) {
 
-            _Db.ContainerGroups.Add(new ContainerGroups { ContainerGroupId = Guid.NewGuid() , ContainerGroupName = containerGroupName });
+            _Db.ContainerGroups.Add(new ContainerGroups {
+                ContainerGroupId = Guid.NewGuid() ,
+                ContainerGroupName = containerGroupName,
+                KeyTemplateId = KeyTemplateId
+            });
+
             _Db.SaveChanges();
 
             HttpResponseMessage response = new HttpResponseMessage()
@@ -66,7 +71,7 @@ namespace VeracityContainerManagementAPI.Controllers
             return Task.FromResult(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("RemoveContainerFromContainerGroup")]
         //Remove container from container group
         public Task<HttpResponseMessage> RemoveContainerFromContainerGroup(Guid ContainerId, Guid containerGroupId)
@@ -89,7 +94,7 @@ namespace VeracityContainerManagementAPI.Controllers
             return Task.FromResult(response);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("ContainerGroupDetails")]
         //Return container group details
         public Task<HttpResponseMessage> ContainerGroupDetails()

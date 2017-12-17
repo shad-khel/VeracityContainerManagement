@@ -22,22 +22,24 @@ namespace VeracityContainerManagementAPI.Controllers
         }
          
         [Route("AllowUserGroupAccessToContainerGroup")]
+        [HttpPost]
         public Task<HttpResponseMessage> AllowUserGroupAccessToContainerGroup(Guid userGroupId, Guid containerGroupId)
-        {
-            
-
+        { 
             var containerGroup = _Db.ContainerGroups.FirstOrDefault(a => a.ContainerGroupId == containerGroupId);
+            Guid KeyType = containerGroup.KeyTemplateId;
+
             var userGroup = _Db.UserGroups.FirstOrDefault(a => a.UserGroupId == userGroupId);
 
             if (!containerGroup.UserGroups.Contains(userGroup))
             {
-                //we need to loop through the users in this user group and foreach share the containers in the the container group
-                //_veracityHelper.ShareResource();
-                
-                    containerGroup.UserGroups.Add(userGroup);
-                    _Db.SaveChanges();
-                
+                containerGroup.UserGroups.Add(userGroup);
+                _Db.SaveChanges();
             }
+
+            //Give everyone in group access to all containers in group
+            var ccol = containerGroup.Containers.Select(a=>a.ContainerId).ToList();
+            var ucol = userGroup.Users.Select(a => a.UserId).ToList();
+            _veracityHelper.ShareResource(ccol, ucol, KeyType);
 
             HttpResponseMessage response = new HttpResponseMessage()
             {
@@ -48,6 +50,7 @@ namespace VeracityContainerManagementAPI.Controllers
         }
 
         [Route("RevokeUserGroupAccessToContainerGroup")]
+        [HttpPut]
         public Task<HttpResponseMessage> RevokeUserGroupAccessToContainerGroup(Guid userGroupId, Guid containerGroupId)
         {
             var containerGroup = _Db.ContainerGroups.FirstOrDefault(a => a.ContainerGroupId == containerGroupId);

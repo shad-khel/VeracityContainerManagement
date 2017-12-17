@@ -22,6 +22,9 @@ namespace VeracityContainerManagementAPI.DB
         [StringLength(50)]
         public string ContainerGroupName { get; set; }
 
+        [Required]
+        public Guid KeyTemplateId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Containers> Containers { get; set; }
 
