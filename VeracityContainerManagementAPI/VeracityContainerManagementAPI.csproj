@@ -176,6 +176,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HttpClientHelperClass.cs" />
     <Compile Include="Helpers\VeracityContainerHelper.cs" />
     <Compile Include="Helpers\VeracityResourceSharingHelper.cs" />
     <Compile Include="Helpers\VeracityUserHelper.cs" />

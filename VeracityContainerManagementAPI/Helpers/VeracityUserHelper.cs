@@ -16,30 +16,19 @@ namespace VeracityContainerManagementAPI.Helpers
 
     public class VeracityUserHelper: IVeracityUserHelper
     {
-        private HttpClient _client;
+        private IHttpClientHelperClass helper;
          
-        public VeracityUserHelper(HttpClient Client)
+        public VeracityUserHelper(IHttpClientHelperClass Helper)
         {
-            _client = Client;
+            helper = Helper;
         }
  
 
         //Does user exsist on Veracity
         public bool IsValidVeracityUser(Guid DnvglUserID)
         {
-            var bearer = WebConfigurationManager.AppSettings["BearerToken"];
-            var baseUri = WebConfigurationManager.AppSettings["ApiBaseUri"];
-            var apiKey = WebConfigurationManager.AppSettings["Ocp-Apim-Subscription-Key"];
-            var useApiManager = WebConfigurationManager.AppSettings["IsApiManager"];
-
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-
-            if (useApiManager.ToLower() == "true")
-                _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
-
-            _client.BaseAddress = new Uri(baseUri);
-
-            var response = _client.GetAsync($"api/users/{DnvglUserID}").Result;
+              
+            var response = helper.Client.GetAsync($"api/users/{DnvglUserID}").Result;
 
             var obj = JsonConvert.DeserializeObject<VeracityUserVM>(response.Content.ReadAsStringAsync().Result);
 

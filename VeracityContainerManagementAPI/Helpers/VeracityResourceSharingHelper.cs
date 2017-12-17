@@ -21,11 +21,11 @@ namespace VeracityContainerManagementAPI.Helpers
 
     public class VeracityResourceSharingHelper: IVeracityResourceSharingHelper
     {
-        private HttpClient _client;
+        private IHttpClientHelperClass helper;
 
-        public VeracityResourceSharingHelper(HttpClient client)
+        public VeracityResourceSharingHelper(IHttpClientHelperClass Helper)
         {
-              _client = client;
+            helper = Helper;
         }
 
         public class ShareResourceVM
@@ -53,21 +53,10 @@ namespace VeracityContainerManagementAPI.Helpers
 
         public string ShareResourceWithUserOnVeracity(Guid resourceId, Guid userId, Guid accessKeyTemplateId)
         {
-            var bearer = WebConfigurationManager.AppSettings["BearerToken"];
-            var baseUri = WebConfigurationManager.AppSettings["ApiBaseUri"];
-            var apiKey = WebConfigurationManager.AppSettings["Ocp-Apim-Subscription-Key"];
-            var useApiManager = WebConfigurationManager.AppSettings["IsApiManager"];
- 
+          
             //TODO This value must be returned from the type of share which should be is a parameter taken on the access grant
             bool autorefreshed = true;
-              
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-
-            if (useApiManager.ToLower() == "true")
-                _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
-
-            _client.BaseAddress = new Uri(baseUri);
-            
+               
             var body = new ShareResourceVM
             {
                 accessKeyTemplateId = accessKeyTemplateId,
@@ -78,7 +67,7 @@ namespace VeracityContainerManagementAPI.Helpers
             var serializedResult = serializer.Serialize(body);
 
             var content = new StringContent(serializedResult, System.Text.Encoding.UTF8, "application/json");
-            var result = _client.PostAsync($"/api/resources/{resourceId}/accesses?autoRefreshed={autorefreshed}", content).Result;
+            var result = helper.Client.PostAsync($"/api/resources/{resourceId}/accesses?autoRefreshed={autorefreshed}", content).Result;
 
             var veracityShare = JsonConvert.DeserializeObject<VeracityShareVM>(result.Content.ReadAsStringAsync().Result);
             return veracityShare?.AccessSharingId;

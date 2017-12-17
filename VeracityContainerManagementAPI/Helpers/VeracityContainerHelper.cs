@@ -20,32 +20,20 @@ namespace VeracityContainerManagementAPI.Helpers
     public class VeracityContainerHelper: IVeracityContainerHelper
     {
         private readonly IDataModel _Db;
-        private HttpClient _client;
+        private IHttpClientHelperClass httpHelper;
 
-        public VeracityContainerHelper(IDataModel db, HttpClient Client)
+        public VeracityContainerHelper(IDataModel db, IHttpClientHelperClass Client)
         {
             _Db = db;
-            _client = Client;
+            httpHelper = Client;
 
         }
 
         public bool AddExistingContainersToDatabase()
-        {
-            var bearer = WebConfigurationManager.AppSettings["BearerToken"];
-            var baseUri = WebConfigurationManager.AppSettings["ApiBaseUri"];
-            var apiKey = WebConfigurationManager.AppSettings["Ocp-Apim-Subscription-Key"];
-            var useApiManager = WebConfigurationManager.AppSettings["IsApiManager"];
-
+        { 
             var containerNameLength = 10;
-
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-
-            if (useApiManager.ToLower() == "true")
-                _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
-
-            _client.BaseAddress = new Uri(baseUri);
-
-            var result = _client.GetAsync($"/api/resources?owned=true").Result;
+             
+            var result = httpHelper.Client.GetAsync($"/api/resources?owned=true").Result;
             var Ownedresources = JsonConvert.DeserializeObject<VeracityResourcesVM>(result.Content.ReadAsStringAsync().Result);
 
             foreach (var r in Ownedresources.OwnedResources)
@@ -57,7 +45,6 @@ namespace VeracityContainerManagementAPI.Helpers
                     _Db.Containers.Add(
                         new Containers { ContainerName = r.ResourceName.Substring(0, containerNameLength) , ContainerId = r.ResourceId}
                         );
-                    
                 }
 
             }
