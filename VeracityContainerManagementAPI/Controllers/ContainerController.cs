@@ -7,6 +7,7 @@ using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
 using VeracityContainerManagementAPI.ViewModels;
 using System.Data.Entity;
+using VeracityContainerManagementAPI.Helpers;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -15,9 +16,11 @@ namespace VeracityContainerManagementAPI.Controllers
     {
         
         private readonly IDataModel _Db;
-        public ContainerController(IDataModel db)
+        private readonly IVeracityContainerHelper _ContainerHelper;
+        public ContainerController(IDataModel db, IVeracityContainerHelper ContainerHelper)
         {
             _Db = db;
+            _ContainerHelper = ContainerHelper;
         }
 
 
@@ -43,6 +46,21 @@ namespace VeracityContainerManagementAPI.Controllers
             return Task.FromResult(response);
 
         }
+
+        [HttpPost]
+        [Route("PopulateContainers")]
+        public Task<HttpResponseMessage> PopulateContainersFromVaracity()
+        { 
+            _ContainerHelper.AddExistingContainersToDatabase();
+
+            HttpResponseMessage response = new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.OK
+            };
+            return Task.FromResult(response);
+        }
+
+
 
         [HttpGet]
         [Route("GetContainerDetails")]

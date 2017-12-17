@@ -20,6 +20,7 @@ namespace VeracityContainerManagementAPI
             container.Register(()=> new HttpClient(), Lifestyle.Scoped);
             container.Register<IVeracityResourceSharingHelper, VeracityResourceSharingHelper>();
             container.Register<IVeracityUserHelper, VeracityUserHelper>();
+            container.Register<IVeracityContainerHelper, VeracityContainerHelper>();
             container.Verify();
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 

@@ -176,12 +176,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\VeracityContainerHelper.cs" />
     <Compile Include="Helpers\VeracityResourceSharingHelper.cs" />
     <Compile Include="Helpers\VeracityUserHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DB\UserGroups.cs" />
     <Compile Include="DB\Users.cs" />
     <Compile Include="ViewModels\ContainerAccessVM.cs" />
+    <Compile Include="ViewModels\OwnedContainerVM.cs" />
+    <Compile Include="ViewModels\VeracityResourcesVM.cs" />
     <Compile Include="ViewModels\VeracityUserVM.cs" />
   </ItemGroup>
   <ItemGroup>
