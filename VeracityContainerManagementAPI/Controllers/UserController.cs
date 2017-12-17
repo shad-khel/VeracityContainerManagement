@@ -47,8 +47,8 @@ namespace VeracityContainerManagementAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetUserDetails")]
-        public Task<IHttpActionResult> GetUserDetails()
+        [Route("{dnvglUserId}/Details")]
+        public Task<IHttpActionResult> GetUserDetails(Guid DnvglUserId)
         {
             throw new NotImplementedException();
         }
