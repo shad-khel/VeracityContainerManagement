@@ -39,7 +39,7 @@ namespace VeracityContainerManagementAPI.Controllers
             //Give everyone in group access to all containers in group
             var ccol = containerGroup.Containers.Select(a=>a.ContainerId).ToList();
             var ucol = userGroup.Users.Select(a => a.UserId).ToList();
-            _veracityHelper.ShareResource(ccol, ucol, KeyType);
+            _veracityHelper.ShareResource(ucol, ccol, KeyType);
 
             HttpResponseMessage response = new HttpResponseMessage()
             {
