@@ -66,7 +66,7 @@ namespace VeracityContainerManagementAPI.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPut]
         [Route("RemoveUserFromUserGroup")]
         //Remove User from UserGroup
         public Task<HttpResponseMessage> RemoveUserFromUserGroup(Guid userId, Guid userGroupId)
@@ -91,7 +91,7 @@ namespace VeracityContainerManagementAPI.Controllers
             return Task.FromResult(response);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("UserGroupDetails")]
         //Return UserGroup details
         public Task<HttpResponseMessage> UserGroupDetails(Guid userGroupId)
