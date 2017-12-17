@@ -17,9 +17,9 @@ namespace VeracityContainerManagementAPI
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             container.Register <IDataModel, DataModel>(Lifestyle.Scoped);
-            container.Register(()=> new HttpClient());
+            container.Register(()=> new HttpClient(), Lifestyle.Scoped);
             container.Register<IVeracityResourceSharingHelper, VeracityResourceSharingHelper>();
-
+            container.Register<IVeracityUserHelper, VeracityUserHelper>();
             container.Verify();
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
