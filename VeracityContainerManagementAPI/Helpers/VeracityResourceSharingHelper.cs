@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.Configuration;
 
 namespace VeracityContainerManagementAPI.Helpers
 {
@@ -52,14 +53,18 @@ namespace VeracityContainerManagementAPI.Helpers
 
         public string ShareResourceWithUserOnVeracity(Guid resourceId, Guid userId, Guid accessKeyTemplateId)
         {
-            //TODO Move these to web configuration
-            string bearer  = "...";
-            string baseUri = "https://ne1dnvglmwappdatavcvp01.azurewebsites.net/";
+            var bearer = WebConfigurationManager.AppSettings["BearerToken"];
+            var baseUri = WebConfigurationManager.AppSettings["ApiBaseUri"];
+            var apiKey = WebConfigurationManager.AppSettings["Ocp-Apim-Subscription-Key"];
+            var useApiManager = WebConfigurationManager.AppSettings["IsApiManager"];
+ 
             //TODO This value must be returned from the type of share which should be is a parameter taken on the access grant
             bool autorefreshed = true;
               
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-            //_client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey)
+
+            if (useApiManager.ToLower() == "true")
+                _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
 
             _client.BaseAddress = new Uri(baseUri);
             

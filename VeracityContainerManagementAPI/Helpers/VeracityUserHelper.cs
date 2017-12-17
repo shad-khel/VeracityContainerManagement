@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using VeracityContainerManagementAPI.ViewModels;
+using System.Web.Configuration;
 
 namespace VeracityContainerManagementAPI.Helpers
 {
@@ -15,25 +16,30 @@ namespace VeracityContainerManagementAPI.Helpers
 
     public class VeracityUserHelper: IVeracityUserHelper
     {
-        private HttpClient _Client;
+        private HttpClient _client;
          
         public VeracityUserHelper(HttpClient Client)
         {
-            _Client = Client;
+            _client = Client;
         }
  
 
         //Does user exsist on Veracity
         public bool IsValidVeracityUser(Guid DnvglUserID)
         {
-            //TODO Move these to web configuration
-            string bearer = "...";
-            string baseUri = "https://ne1dnvglmwappdatavcvp01.azurewebsites.net/";
+            var bearer = WebConfigurationManager.AppSettings["BearerToken"];
+            var baseUri = WebConfigurationManager.AppSettings["ApiBaseUri"];
+            var apiKey = WebConfigurationManager.AppSettings["Ocp-Apim-Subscription-Key"];
+            var useApiManager = WebConfigurationManager.AppSettings["IsApiManager"];
 
-            _Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-            _Client.BaseAddress = new Uri(baseUri);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
 
-            var response = _Client.GetAsync($"api/users/{DnvglUserID}").Result;
+            if (useApiManager.ToLower() == "true")
+                _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
+
+            _client.BaseAddress = new Uri(baseUri);
+
+            var response = _client.GetAsync($"api/users/{DnvglUserID}").Result;
 
             var obj = JsonConvert.DeserializeObject<VeracityUserVM>(response.Content.ReadAsStringAsync().Result);
 
