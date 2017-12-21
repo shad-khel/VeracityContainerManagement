@@ -18,6 +18,8 @@ namespace VeracityContainerManagementAPI.DB
         public virtual DbSet<UserGroups> UserGroups { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
+        public virtual DbSet<ContainerManagementUsers> ContainerManagementUser { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ContainerGroups>()
@@ -34,6 +36,8 @@ namespace VeracityContainerManagementAPI.DB
                 .HasMany(e => e.Users)
                 .WithMany(e => e.UserGroups)
                 .Map(m => m.ToTable("UserGroupsUsers").MapLeftKey("UserGroupId").MapRightKey("UserId"));
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public override int SaveChanges()

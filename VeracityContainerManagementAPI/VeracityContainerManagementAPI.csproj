@@ -167,8 +167,13 @@
     <Compile Include="DB\201712171716444_Add key template.Designer.cs">
       <DependentUpon>201712171716444_Add key template.cs</DependentUpon>
     </Compile>
+    <Compile Include="DB\201712211126133_Add container management user.cs" />
+    <Compile Include="DB\201712211126133_Add container management user.Designer.cs">
+      <DependentUpon>201712211126133_Add container management user.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB\Configuration.cs" />
     <Compile Include="DB\ContainerGroups.cs" />
+    <Compile Include="DB\ContainerManagementUsers.cs" />
     <Compile Include="DB\Containers.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DB\DataModel.cs" />
@@ -204,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DB\201712171716444_Add key template.resx">
       <DependentUpon>201712171716444_Add key template.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB\201712211126133_Add container management user.resx">
+      <DependentUpon>201712211126133_Add container management user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
