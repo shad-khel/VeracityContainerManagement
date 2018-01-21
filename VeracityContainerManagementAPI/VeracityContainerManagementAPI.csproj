@@ -176,7 +176,12 @@
     <Compile Include="DB\201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.Designer.cs">
       <DependentUpon>201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.cs</DependentUpon>
     </Compile>
+    <Compile Include="DB\201801211558064_Container access metadata.cs" />
+    <Compile Include="DB\201801211558064_Container access metadata.Designer.cs">
+      <DependentUpon>201801211558064_Container access metadata.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB\Configuration.cs" />
+    <Compile Include="DB\ContainerAccess.cs" />
     <Compile Include="DB\ContainerGroups.cs" />
     <Compile Include="DB\ContainerManagementUsers.cs" />
     <Compile Include="DB\Containers.cs" />
@@ -220,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DB\201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.resx">
       <DependentUpon>201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB\201801211558064_Container access metadata.resx">
+      <DependentUpon>201801211558064_Container access metadata.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

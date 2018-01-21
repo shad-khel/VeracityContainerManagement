@@ -12,7 +12,7 @@ namespace VeracityContainerManagementAPI.DB
         public ContainerGroups()
         {
             Containers = new HashSet<Containers>();
-            UserGroups = new HashSet<UserGroups>();
+            //UserGroups = new HashSet<UserGroups>();
         }
 
         [Key]
@@ -28,12 +28,11 @@ namespace VeracityContainerManagementAPI.DB
         public string ContainerGroupName { get; set; }
 
         [Required]
-        public Guid KeyTemplateId { get; set; }
+        public Guid DefaultKeyTemplateId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Containers> Containers { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserGroups> UserGroups { get; set; }
+      
     }
 }

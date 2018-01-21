@@ -36,7 +36,7 @@ namespace VeracityContainerManagementAPI.Controllers
             _Db.ContainerGroups.Add(new ContainerGroups {
                 ContainerGroupId = Guid.NewGuid() ,
                 ContainerGroupName = containerGroupName,
-                KeyTemplateId = DefaultKeyTemplateId,
+                DefaultKeyTemplateId = DefaultKeyTemplateId,
                 OwnerId = OwnerId
             });
 
