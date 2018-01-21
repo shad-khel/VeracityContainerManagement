@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
 using VeracityContainerManagementAPI.Helpers;
+using VeracityContainerManagementAPI.Exceptions;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -30,7 +31,15 @@ namespace VeracityContainerManagementAPI.Controllers
 
             //If no key is supplied then try default key from the container group
             if (keyTemplateId == new Guid()) {
-                 KeyType = containerGroup.DefaultKeyTemplateId;
+
+                if (containerGroup.DefaultKeyTemplateId.HasValue)
+                {
+                    KeyType = containerGroup.DefaultKeyTemplateId.Value;
+                }else
+                {
+                    throw new ValidTemplateKeyNotFoundException();
+                }
+
             }else
             {
                 KeyType = keyTemplateId;
