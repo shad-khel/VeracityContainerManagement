@@ -28,9 +28,9 @@ namespace VeracityContainerManagementAPI.Controllers
         [HttpPost]
         [Route("CreateUserGroup")]
         //Add a User group
-        public Task<HttpResponseMessage> CreateUserGroup(string userGroupName)
+        public Task<HttpResponseMessage> CreateUserGroup(string userGroupName, Guid OwnerId)
         {
-            _Db.UserGroups.Add(new UserGroups { UserGroupId = Guid.NewGuid(), UserGroupName = userGroupName });
+            _Db.UserGroups.Add(new UserGroups { UserGroupId = Guid.NewGuid(), UserGroupName = userGroupName, OwnerId = OwnerId });
             _Db.SaveChanges();
 
             HttpResponseMessage response = new HttpResponseMessage()

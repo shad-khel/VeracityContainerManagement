@@ -43,7 +43,9 @@ namespace VeracityContainerManagementAPI.Helpers
                 {
                     //TODO save the owner Id details also
                     _Db.Containers.Add(
-                        new Containers { ContainerName = r.ResourceName.Substring(0, containerNameLength) , ContainerId = r.ResourceId}
+                        new Containers { ContainerName = r.ResourceName.Substring(0, containerNameLength),
+                            ContainerId = r.ResourceId,
+                            OwnerId = r.OwnerId }
                         );
                 }
 

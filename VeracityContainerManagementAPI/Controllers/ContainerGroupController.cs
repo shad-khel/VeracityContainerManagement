@@ -30,12 +30,14 @@ namespace VeracityContainerManagementAPI.Controllers
         [HttpPost]
         [Route("CreateContainerGroup")]
         //Add a container group
-        public Task<HttpResponseMessage> CreateContainerGroup(string containerGroupName, Guid KeyTemplateId) {
+        public Task<HttpResponseMessage> CreateContainerGroup(string containerGroupName,  Guid OwnerId, Guid DefaultKeyTemplateId = new Guid()) {
+            //Move the keytemplate to the Sharing Action 
 
             _Db.ContainerGroups.Add(new ContainerGroups {
                 ContainerGroupId = Guid.NewGuid() ,
                 ContainerGroupName = containerGroupName,
-                KeyTemplateId = KeyTemplateId
+                KeyTemplateId = DefaultKeyTemplateId,
+                OwnerId = OwnerId
             });
 
             _Db.SaveChanges();

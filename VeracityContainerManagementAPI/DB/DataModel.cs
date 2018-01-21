@@ -37,6 +37,13 @@ namespace VeracityContainerManagementAPI.DB
                 .WithMany(e => e.UserGroups)
                 .Map(m => m.ToTable("UserGroupsUsers").MapLeftKey("UserGroupId").MapRightKey("UserId"));
 
+
+            modelBuilder.Entity<UserGroups>().HasRequired<Users>(j => j.User).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Containers>().HasRequired<Users>(j => j.User).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<ContainerGroups>().HasRequired<Users>(j => j.User).WithMany().WillCascadeOnDelete(false);
+            
+
+
             base.OnModelCreating(modelBuilder);
         }
 

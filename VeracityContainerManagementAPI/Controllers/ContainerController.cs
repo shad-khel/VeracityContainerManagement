@@ -26,10 +26,10 @@ namespace VeracityContainerManagementAPI.Controllers
 
         [HttpPost]
         [Route("AddContainer")] 
-        public Task<HttpResponseMessage> AddContainer(Guid containerId, string containerName)
+        public Task<HttpResponseMessage> AddContainer(Guid containerId, string containerName, Guid OwnerId)
         {
             //TODO remove tightly coupled database
-            Containers container = new Containers { ContainerId = containerId, ContainerName = containerName};
+            Containers container = new Containers { ContainerId = containerId, ContainerName = containerName,  OwnerId = OwnerId};
             var check = _Db.Containers.Where(a => a.ContainerId == container.ContainerId);
             
             //check container in DB

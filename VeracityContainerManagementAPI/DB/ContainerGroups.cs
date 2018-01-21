@@ -18,6 +18,11 @@ namespace VeracityContainerManagementAPI.DB
         [Key]
         public Guid ContainerGroupId { get; set; }
 
+        [ForeignKey("User")]
+        public Guid OwnerId { get; set; }
+ 
+        public virtual Users User { get; set; }
+
         [Required]
         [StringLength(50)]
         public string ContainerGroupName { get; set; }
