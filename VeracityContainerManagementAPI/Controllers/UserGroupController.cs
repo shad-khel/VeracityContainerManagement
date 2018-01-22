@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
+using VeracityContainerManagementAPI.ViewModels;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -20,9 +21,21 @@ namespace VeracityContainerManagementAPI.Controllers
 
 
         [HttpGet]
-        public List<UserGroups> GetAllUserGroups()
+        public List<UserGroupVM> GetAllUserGroups(Guid OwnerId)
         {
-            return _Db.UserGroups.ToList();
+
+            return _Db.UserGroups.Where(a => a.OwnerId == OwnerId)
+                .Select(a => new UserGroupVM()
+                {
+                     OwnerId = a.OwnerId,
+                     UserGroupName = a.UserGroupName,
+                     UserGroupId = a.UserGroupId,
+                     UsersInGroup = a.Users
+                                        .Select(b => new UserVM() { Email = b.Email, UserId= b.UserId, UserName = b.UserName})
+                                        .ToList()
+                })
+                .ToList();
+
         }
 
         [HttpPost]

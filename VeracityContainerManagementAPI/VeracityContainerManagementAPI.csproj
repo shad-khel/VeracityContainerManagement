@@ -207,6 +207,8 @@
     <Compile Include="ViewModels\ContainerGroupVM.cs" />
     <Compile Include="ViewModels\ContainerVM.cs" />
     <Compile Include="ViewModels\OwnedContainerVM.cs" />
+    <Compile Include="ViewModels\UserGroupVM.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\VeracityResourcesVM.cs" />
     <Compile Include="ViewModels\VeracityUserVM.cs" />
   </ItemGroup>
