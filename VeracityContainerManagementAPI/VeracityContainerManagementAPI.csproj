@@ -204,6 +204,7 @@
     <Compile Include="DB\UserGroups.cs" />
     <Compile Include="DB\Users.cs" />
     <Compile Include="ViewModels\ContainerAccessVM.cs" />
+    <Compile Include="ViewModels\ContainerGroupVM.cs" />
     <Compile Include="ViewModels\OwnedContainerVM.cs" />
     <Compile Include="ViewModels\VeracityResourcesVM.cs" />
     <Compile Include="ViewModels\VeracityUserVM.cs" />

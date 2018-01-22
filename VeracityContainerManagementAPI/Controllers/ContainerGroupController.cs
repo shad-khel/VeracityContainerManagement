@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
+using VeracityContainerManagementAPI.ViewModels;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -21,16 +22,22 @@ namespace VeracityContainerManagementAPI.Controllers
 
 
         [HttpGet]
-        public List<ContainerGroups> GetAllContainerGroups()
+        public List<ContainerGroupVM> GetAllContainerGroups(Guid OwnerId)
         {
-            return _Db.ContainerGroups.ToList();
+            return _Db.ContainerGroups.Where(a => a.OwnerId == OwnerId)
+                .Select(a => new ContainerGroupVM() {
+                    ContainerGroupId = a.ContainerGroupId,
+                    ContainerGroupName = a.ContainerGroupName,
+                    OwnerId = a.OwnerId,
+                    DefaultKeyTemplateId= a.DefaultKeyTemplateId})
+                .ToList();
         }
 
 
         [HttpPost]
         [Route("CreateContainerGroup")]
         //Add a container group
-        public Task<HttpResponseMessage> CreateContainerGroup(string containerGroupName,  Guid OwnerId, Guid DefaultKeyTemplateId = new Guid()) {
+        public Task<HttpResponseMessage> CreateContainerGroup(string containerGroupName,  Guid OwnerId, Guid? DefaultKeyTemplateId = null) {
             //Move the keytemplate to the Sharing Action 
 
             _Db.ContainerGroups.Add(new ContainerGroups {
