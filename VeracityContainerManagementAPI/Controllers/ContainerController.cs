@@ -74,12 +74,19 @@ namespace VeracityContainerManagementAPI.Controllers
         public List<ContainerAccessVM> ListUsersWithAccessToContainer(Guid containerId)
         {
 
-            var containerGroups = _Db.Containers.First(a => a.ContainerId == containerId).ContainerGroups;
-             
-            var ret = new List<ContainerAccessVM>();
             
+
+            var ret = new List<ContainerAccessVM>();
+
             //Experiment retrive users by looping through navigation properties
             //TODO can this be simplified with a LinqQuery or Join?
+
+            //_Db.Containers.Join(_Db.ContainerGroups, c => c.ContainerId, g => g.Containers, (f, b) => new { f, b });
+
+
+
+            var containerGroups = _Db.Containers.First(a => a.ContainerId == containerId).ContainerGroups;
+
             foreach (var c in containerGroups)
             {
                 var accessrecord = _Db.ContainerAccess.Where(a => a.ContainerGroupId == c.ContainerGroupId);
@@ -89,7 +96,13 @@ namespace VeracityContainerManagementAPI.Controllers
                     var usergroup = _Db.UserGroups.First(a => a.UserGroupId == access.UserGroupId);
                     foreach (var user in usergroup.Users)
                     {
-                        ret.Add(new ContainerAccessVM { Email = user.Email, UserId = user.UserId, UserName = user.UserName });
+                        ret.Add(new ContainerAccessVM {
+                            Email = user.Email,
+                            UserId = user.UserId,
+                            UserName = user.UserName,
+                            KeyTemplateId = access.AccessKeyId,
+                            UserGroupName = usergroup.UserGroupName
+                        });
                     }
                      
                 }

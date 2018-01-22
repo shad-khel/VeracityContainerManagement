@@ -13,5 +13,8 @@ namespace VeracityContainerManagementAPI.ViewModels
         public string UserName { get; set; }
 
         public string Email { get; set; }
+
+        public Guid KeyTemplateId { get; set; }
+        public string UserGroupName { get; set; }
     }
 }
