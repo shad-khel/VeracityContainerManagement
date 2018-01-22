@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeracityContainerManagement
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeracityContainerManagementAPI", "VeracityContainerManagementAPI\VeracityContainerManagementAPI.csproj", "{858B5BA0-2695-4423-9F36-04AFC33DF483}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerMangementTest", "ContainerMangementTest\ContainerMangementTest.csproj", "{C9E34951-DF9E-4874-A647-7AD0308B3DE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{858B5BA0-2695-4423-9F36-04AFC33DF483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{858B5BA0-2695-4423-9F36-04AFC33DF483}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{858B5BA0-2695-4423-9F36-04AFC33DF483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E34951-DF9E-4874-A647-7AD0308B3DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E34951-DF9E-4874-A647-7AD0308B3DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E34951-DF9E-4874-A647-7AD0308B3DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E34951-DF9E-4874-A647-7AD0308B3DE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
