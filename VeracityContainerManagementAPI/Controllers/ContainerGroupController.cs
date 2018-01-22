@@ -29,7 +29,13 @@ namespace VeracityContainerManagementAPI.Controllers
                     ContainerGroupId = a.ContainerGroupId,
                     ContainerGroupName = a.ContainerGroupName,
                     OwnerId = a.OwnerId,
-                    DefaultKeyTemplateId= a.DefaultKeyTemplateId})
+                    DefaultKeyTemplateId= a.DefaultKeyTemplateId,
+                    ContainersInGroup = a.Containers
+                                            .Select(b => new ContainerVM() {OwnerId = b.OwnerId, ContainerId = b.ContainerId, ContainerName = b.ContainerName })
+                                            .ToList() 
+                }
+                     
+                )
                 .ToList();
         }
 
@@ -106,7 +112,7 @@ namespace VeracityContainerManagementAPI.Controllers
         [HttpGet]
         [Route("ContainerGroupDetails")]
         //Return container group details
-        public Task<HttpResponseMessage> ContainerGroupDetails()
+        public Task<HttpResponseMessage> ContainerGroupDetails(Guid containerGroupId)
         {
             throw new NotImplementedException();
         }

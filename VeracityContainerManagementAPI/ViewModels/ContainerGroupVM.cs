@@ -10,6 +10,8 @@ namespace VeracityContainerManagementAPI.ViewModels
        public Guid ContainerGroupId { get; set; }
        public string ContainerGroupName { get; set; }
        public Guid OwnerId { get; set; }
-        public Guid? DefaultKeyTemplateId { get; set; }
+       public Guid? DefaultKeyTemplateId { get; set; }
+
+       public List<ContainerVM> ContainersInGroup { get; set; }
     }
 }
