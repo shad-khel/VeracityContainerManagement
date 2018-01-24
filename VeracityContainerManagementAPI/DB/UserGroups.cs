@@ -11,7 +11,7 @@ namespace VeracityContainerManagementAPI.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserGroups()
         {
-            ContainerGroups = new HashSet<ContainerGroups>();
+            //ContainerGroups = new HashSet<ContainerGroups>();
             Users = new HashSet<Users>();
         }
 
@@ -27,9 +27,7 @@ namespace VeracityContainerManagementAPI.DB
         [Required]
         [StringLength(50)]
         public string UserGroupName { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ContainerGroups> ContainerGroups { get; set; }
+ 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Users> Users { get; set; }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using VeracityContainerManagementAPI.DB;
 using VeracityContainerManagementAPI.Helpers;
+using VeracityContainerManagementAPI.Exceptions;
 
 namespace VeracityContainerManagementAPI.Controllers
 {
@@ -23,16 +24,46 @@ namespace VeracityContainerManagementAPI.Controllers
          
         [Route("AllowUserGroupAccessToContainerGroup")]
         [HttpPost]
-        public Task<HttpResponseMessage> AllowUserGroupAccessToContainerGroup(Guid userGroupId, Guid containerGroupId)
+        public Task<HttpResponseMessage> AllowUserGroupAccessToContainerGroup(Guid userGroupId, Guid containerGroupId, Guid OwnerId, Guid keyTemplateId = new Guid())
         { 
             var containerGroup = _Db.ContainerGroups.FirstOrDefault(a => a.ContainerGroupId == containerGroupId);
-            Guid KeyType = containerGroup.KeyTemplateId;
+            Guid KeyType;
 
+            //If no key is supplied then try default key from the container group
+            if (keyTemplateId == new Guid()) {
+
+                if (containerGroup.DefaultKeyTemplateId.HasValue)
+                {
+                    KeyType = containerGroup.DefaultKeyTemplateId.Value;
+                }else
+                {
+                    throw new ValidTemplateKeyNotFoundException();
+                }
+
+            }else
+            {
+                KeyType = keyTemplateId;
+            }
+
+
+            //Save the key in the access sharing object
             var userGroup = _Db.UserGroups.FirstOrDefault(a => a.UserGroupId == userGroupId);
 
-            if (!containerGroup.UserGroups.Contains(userGroup))
+            var containerAccess = _Db.ContainerAccess
+                                                    .FirstOrDefault(a => a.ContainerGroupId == containerGroupId
+                                                    && a.UserGroupId == userGroupId); 
+
+            if (containerAccess == null)
             {
-                containerGroup.UserGroups.Add(userGroup);
+                _Db.ContainerAccess.Add(new ContainerAccess
+                {
+                    ContainerAccessId = Guid.NewGuid(),
+                    ContainerGroupId = containerGroupId,
+                    UserGroupId = userGroupId,
+                    OwnerId = OwnerId,
+                    DateTimeAdded = DateTime.Now,
+                    AccessKeyId = KeyType
+                });
                 _Db.SaveChanges();
             }
 
@@ -56,9 +87,12 @@ namespace VeracityContainerManagementAPI.Controllers
             var containerGroup = _Db.ContainerGroups.FirstOrDefault(a => a.ContainerGroupId == containerGroupId);
             var userGroup = _Db.UserGroups.FirstOrDefault(a => a.UserGroupId == userGroupId);
 
-            if (containerGroup.UserGroups.Contains(userGroup))
-            {
-                containerGroup.UserGroups.Remove(userGroup);
+
+            var containerAccess = _Db.ContainerAccess
+                                                   .FirstOrDefault(a => a.ContainerGroupId == containerGroupId
+                                                   && a.UserGroupId == userGroupId);
+            if (containerAccess != null) {
+                _Db.ContainerAccess.Remove(containerAccess);
                 _Db.SaveChanges();
             }
 

@@ -74,23 +74,40 @@ namespace VeracityContainerManagementAPI.Controllers
         public List<ContainerAccessVM> ListUsersWithAccessToContainer(Guid containerId)
         {
 
-            //var containersAccess = _Db.Containers.Where(a => a.ContainerId == containerId)
-            //    .Include(a => a.ContainerGroups.Select(b => b.UserGroups.Select(c => c.Users))).FirstOrDefault();
-
-             
-         var container = _Db.Containers.FirstOrDefault(a => a.ContainerId == containerId);
+            
 
             var ret = new List<ContainerAccessVM>();
-            
+
             //Experiment retrive users by looping through navigation properties
             //TODO can this be simplified with a LinqQuery or Join?
-            foreach (var c in container.ContainerGroups)
+
+            //_Db.Containers.Join(_Db.ContainerGroups, c => c.ContainerId, g => g.Containers, (f, b) => new { f, b });
+
+
+
+            var containerGroups = _Db.Containers.First(a => a.ContainerId == containerId).ContainerGroups;
+
+            foreach (var c in containerGroups)
             {
-                foreach (var ug in c.UserGroups)
+                var accessrecord = _Db.ContainerAccess.Where(a => a.ContainerGroupId == c.ContainerGroupId);
+
+                foreach (var access in accessrecord)
                 {
-                    foreach (var u in ug.Users)
-                        ret.Add(new ContainerAccessVM { Email = u.Email, UserId = u.UserId, UserName = u.UserName });
+                    var usergroup = _Db.UserGroups.First(a => a.UserGroupId == access.UserGroupId);
+                    foreach (var user in usergroup.Users)
+                    {
+                        ret.Add(new ContainerAccessVM {
+                            Email = user.Email,
+                            UserId = user.UserId,
+                            UserName = user.UserName,
+                            KeyTemplateId = access.AccessKeyId,
+                            UserGroupName = usergroup.UserGroupName
+                        });
+                    }
+                     
                 }
+
+                 
             }
 
             return ret;

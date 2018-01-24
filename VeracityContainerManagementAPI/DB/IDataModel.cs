@@ -10,6 +10,8 @@ namespace VeracityContainerManagementAPI.DB
         DbSet<Users> Users { get; set; }
         DbSet<ContainerManagementUsers> ContainerManagementUser { get; set; }
 
+        DbSet<ContainerAccess> ContainerAccess { get; set; }
+
         int SaveChanges();
     }
 }

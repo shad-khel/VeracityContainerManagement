@@ -160,6 +160,11 @@
     <Compile Include="Controllers\ContainerGroupController.cs" />
     <Compile Include="Controllers\ContainerManagementUserController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
+    <Compile Include="DB\201801211622494_Rename column keytemplateId on ContainerGroups.cs" />
+    <Compile Include="DB\201801211622494_Rename column keytemplateId on ContainerGroups.Designer.cs">
+      <DependentUpon>201801211622494_Rename column keytemplateId on ContainerGroups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Exceptions\ValidTemplateKeyNotFoundException.cs" />
     <Compile Include="DB\201711262019174_AddDB.cs" />
     <Compile Include="DB\201711262019174_AddDB.Designer.cs">
       <DependentUpon>201711262019174_AddDB.cs</DependentUpon>
@@ -176,7 +181,12 @@
     <Compile Include="DB\201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.Designer.cs">
       <DependentUpon>201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.cs</DependentUpon>
     </Compile>
+    <Compile Include="DB\201801211558064_Container access metadata.cs" />
+    <Compile Include="DB\201801211558064_Container access metadata.Designer.cs">
+      <DependentUpon>201801211558064_Container access metadata.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB\Configuration.cs" />
+    <Compile Include="DB\ContainerAccess.cs" />
     <Compile Include="DB\ContainerGroups.cs" />
     <Compile Include="DB\ContainerManagementUsers.cs" />
     <Compile Include="DB\Containers.cs" />
@@ -194,7 +204,11 @@
     <Compile Include="DB\UserGroups.cs" />
     <Compile Include="DB\Users.cs" />
     <Compile Include="ViewModels\ContainerAccessVM.cs" />
+    <Compile Include="ViewModels\ContainerGroupVM.cs" />
+    <Compile Include="ViewModels\ContainerVM.cs" />
     <Compile Include="ViewModels\OwnedContainerVM.cs" />
+    <Compile Include="ViewModels\UserGroupVM.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\VeracityResourcesVM.cs" />
     <Compile Include="ViewModels\VeracityUserVM.cs" />
   </ItemGroup>
@@ -220,6 +234,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DB\201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.resx">
       <DependentUpon>201801211128013_Add OwnerId on Containers ContainerGroups UserGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB\201801211558064_Container access metadata.resx">
+      <DependentUpon>201801211558064_Container access metadata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB\201801211622494_Rename column keytemplateId on ContainerGroups.resx">
+      <DependentUpon>201801211622494_Rename column keytemplateId on ContainerGroups.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

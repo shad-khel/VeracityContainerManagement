@@ -20,6 +20,8 @@ namespace VeracityContainerManagementAPI.DB
 
         public virtual DbSet<ContainerManagementUsers> ContainerManagementUser { get; set; }
 
+        public virtual DbSet<ContainerAccess> ContainerAccess { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ContainerGroups>()
@@ -27,22 +29,24 @@ namespace VeracityContainerManagementAPI.DB
                 .WithMany(e => e.ContainerGroups)
                 .Map(m => m.ToTable("ContainerGroupsContainers").MapLeftKey("ContainerGroupId").MapRightKey("ContainerId"));
 
-            modelBuilder.Entity<ContainerGroups>()
-                .HasMany(e => e.UserGroups)
-                .WithMany(e => e.ContainerGroups)
-                .Map(m => m.ToTable("UserGroupsContainerGroups").MapLeftKey("ContainerGroupId").MapRightKey("UserGroupId"));
-
             modelBuilder.Entity<UserGroups>()
                 .HasMany(e => e.Users)
                 .WithMany(e => e.UserGroups)
                 .Map(m => m.ToTable("UserGroupsUsers").MapLeftKey("UserGroupId").MapRightKey("UserId"));
 
+            //modelBuilder.Entity<ContainerGroups>()
+            //    .HasMany(e => e.UserGroups)
+            //    .WithMany(e => e.ContainerGroups)
+            //    .Map(m => m.ToTable("UserGroupsContainerGroups").MapLeftKey("ContainerGroupId").MapRightKey("UserGroupId"));
+
 
             modelBuilder.Entity<UserGroups>().HasRequired<Users>(j => j.User).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<Containers>().HasRequired<Users>(j => j.User).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<ContainerGroups>().HasRequired<Users>(j => j.User).WithMany().WillCascadeOnDelete(false);
-            
 
+            modelBuilder.Entity<ContainerAccess>().HasRequired<UserGroups>(u => u.UserGroup).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<ContainerAccess>().HasRequired<ContainerGroups>(u => u.ContainerGroups).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<ContainerAccess>().HasRequired<Users>(u => u.User).WithMany().WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
         }
