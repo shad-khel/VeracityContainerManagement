@@ -82,9 +82,17 @@ namespace VeracityContainerManagementAPI.Controllers
             //TODO can this be simplified with a LinqQuery or Join?
 
             //_Db.Containers.Join(_Db.ContainerGroups, c => c.ContainerId, g => g.Containers, (f, b) => new { f, b });
+            //var test = _Db.ContainerAccess
+            //    .Include(c => c.ContainerGroups)
+            //    .Include(d => d.UserGroup).Select(a => a.ContainerGroups.Containers.Where(ab => ab.ContainerId == containerId));
+             
 
+            //var users = from containersGroups in _Db.Containers.First(a => a.ContainerId == containerId).ContainerGroups
+            //            join access in _Db.ContainerAccess on containersGroups.ContainerGroupId equals access.ContainerGroupId
+            //            join userGroups in _Db.UserGroups on access.UserGroupId equals userGroups.UserGroupId;
+                            
 
-
+          
             var containerGroups = _Db.Containers.First(a => a.ContainerId == containerId).ContainerGroups;
 
             foreach (var c in containerGroups)
